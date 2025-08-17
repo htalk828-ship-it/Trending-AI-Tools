@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trending AI Tools</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            color: #f0f0f0;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            animation: fadeIn 1s ease;
+        }
+
+        header h1 {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            background: linear-gradient(45deg, #ff8a00, #e52e71, #22c1c3);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 700;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            color: #d0d0d0;
+        }
+
+        .search-container {
+            max-width: 600px;
+            margin: 0 auto 40px;
+            position: relative;
+        }
+
+        .search-container input {
+            width: 100%;
+            padding: 15px 20px;
+            border-radius: 50px;
+            border: 2px solid rgba(255,255,255,0.1);
+            background: rgba(0,0,0,0.2);
+            color: white;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .search-container input:focus {
+            border-color: #22c1c3;
+            box-shadow: 0 0 20px rgba(34, 193, 195, 0.3);
+        }
+
+        .search-container i {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #aaa;
+        }
+
+        .category-filter {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+
+        .category-btn {
+            padding: 10px 20px;
+            border-radius: 30px;
+            background: rgba(255,255,255,0.08);
+            border: none;
+            color: #d0d0d0;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .category-btn:hover, .category-btn.active {
+            background: linear-gradient(45deg, #ff8a00, #e52e71);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .tool-card {
+            background: rgba(30, 30, 60, 0.7);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            transition: all 0.4s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.05);
+            animation: slideUp 0.6s ease;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+            border-color: rgba(34, 193, 195, 0.3);
+        }
+
+        .card-header {
+            padding: 25px;
+            background: rgba(0,0,0,0.2);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .card-header h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-header h3 i {
+            color: #22c1c3;
+        }
+
+        .category-tag {
+            display: inline-block;
+            padding: 5px 12px;
+            background: rgba(34, 193, 195, 0.15);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: #22c1c3;
+        }
+
+        .card-body {
+            padding: 25px;
+        }
+
+        .card-body p {
+            margin-bottom: 20px;
+            color: #d0d0d0;
+            font-size: 0.95rem;
+        }
+
+        .features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .feature-tag {
+            padding: 5px 12px;
+            background: rgba(255,138,0,0.15);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: #ff8a00;
+        }
+
+        .card-footer {
+            padding: 15px 25px;
+            background: rgba(0,0,0,0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .pricing {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #e52e71;
+        }
+
+        .visit-btn {
+            padding: 8px 20px;
+            background: linear-gradient(45deg, #22c1c3, #22c1c3);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .visit-btn:hover {
+            background: linear-gradient(45deg, #1da8aa, #1da8aa);
+            transform: scale(1.05);
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            color: #aaa;
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            margin-top: 20px;
+        }
+
+        .highlight {
+            color: #22c1c3;
+            font-weight: 500;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Trending AI Tools</h1>
+            <p>Discover the most innovative AI tools transforming industries and workflows. Curated list updated weekly.</p>
+            
+            <div class="search-container">
+                <input type="text" placeholder="Search AI tools...">
+                <i class="fas fa-search"></i>
+            </div>
+            
+            <div class="category-filter">
+                <button class="category-btn active">All</button>
+                <button class="category-btn">Generative AI</button>
+                <button class="category-btn">Productivity</button>
+                <button class="category-btn">Image & Video</button>
+                <button class="category-btn">Coding</button>
+                <button class="category-btn">Writing</button>
+            </div>
+        </header>
+        
+        <main>
+            <div class="tools-grid">
+                <!-- Tool Card 1 -->
+                <div class="tool-card">
+                    <div class="card-header">
+                        <h3><i class="fab fa-openai"></i> ChatGPT-4</h3>
+                        <span class="category-tag">Generative AI</span>
+                    </div>
+                    <div class="card-body">
+                        <p>Advanced conversational AI that understands context, generates human-like text, and assists with a wide range of tasks from writing to problem-solving.</p>
+                        <div class="features">
+                            <span class="feature-tag">Conversational</span>
+                            <span class="feature-tag">Multi-language</span>
+                            <span class="feature-tag">Code generation</span>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <span class="pricing">Freemium</span>
+                        <a href="#" class="visit-btn">Try Now</a>
+                    </div>
+                </div>
+                
+                <!-- Tool Card 2 -->
+                <div class="tool-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-paint-brush"></i> Midjourney</h3>
+                        <span class="category-tag">Image & Video</span>
+                    </div>
+                    <div class="card-body">
+                        <p>AI-powered image generator that creates stunning visuals from text descriptions. Perfect for artists, designers, and content creators.</p>
+                        <div class="features">
+                            <span class="feature-tag">Text-to-image</span>
+                            <span class="feature-tag">Art styles</span>
+                            <span class="feature-tag">High resolution</span>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <span class="pricing">Subscription</span>
+                        <a href="#" class="visit-btn">Explore</a>
+                    </div>
+                </div>
+                
+                <!-- Tool Card 3 -->
+                <div class="tool-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-code"></i> GitHub Copilot</h3>
+                        <span class="category-tag">Coding</span>
+                    </div>
+                    <div class="card-body">
+                        <p>Your AI pair programmer that suggests code and entire functions in real-time. Trained on billions of lines of public code.</p>
+                        <div class="features">
+                            <span class="feature-tag">Code completion</span>
+                            <span class="feature-tag">Multi-language</span>
+                            <span class="feature-tag">VS Code integration</span>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <span class="pricing">Paid</span>
+                        <a href="#" class="visit-btn">Get Started</a>
+                    </div>
+                </div>
+                
+                <!-- Tool Card 4 -->
+                <div class="tool-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-file-alt"></i> Jasper AI</h3>
+                        <span class="category-tag">Writing</span>
+                    </div>
+                    <div class="card-body">
+                        <p>AI content generator that helps create marketing copy, blog posts, social media content, and more in seconds.</p>
+                        <div class="features">
+                            <span class="feature-tag">Content creation</span>
+                            <span class="feature-tag">SEO optimized</span>
+                            <span class="feature-tag">Templates</span>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <span class="pricing">Subscription</span>
+                        <a href="#" class="visit-btn">Create</a>
+                    </div>
+                </div>
+                
+                <!-- Tool Card 5 -->
+                <div class="tool-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-video"></i> Runway ML</h3>
+                        <span class="category-tag">Image & Video</span>
+                    </div>
+                    <div class="card-body">
+                        <p>Advanced creative suite with AI tools for video editing, image generation, and multimedia creation without coding.</p>
+                        <div class="features">
+                            <span class="feature-tag">Video editing</span>
+                            <span class="feature-tag">Green screen</span>
+                            <span class="feature-tag">Motion tracking</span>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <span class="pricing">Freemium</span>
+                        <a href="#" class="visit-btn">Try Free</a>
+                    </div>
+                </div>
+                
+                <!-- Tool Card 6 -->
+                <div class="tool-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-chart-line"></i> Synthesia</h3>
+                        <span class="category-tag">Productivity</span>
+                    </div>
+                    <div class="card-body">
+                        <p>Create professional videos with AI avatars. Simply type your script and choose from over 100 AI presenters.</p>
+                        <div class="features">
+                            <span class="feature-tag">AI Avatars</span>
+                            <span class="feature-tag">120+ Languages</span>
+                            <span class="feature-tag">Custom avatars</span>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <span class="pricing">Enterprise</span>
+                        <a href="#" class="visit-btn">Demo</a>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <footer>
+            <p>Discover new AI tools weekly. <span class="highlight">Bookmark this page!</span></p>
+            <p>Made with ❤️ & AI | Updated: August 2023</p>
+        </footer>
+    </div>
+
+    <script>
+        // Simple interactivity
+        document.addEventListener('DOMContentLoaded', function() {
+            // Category filtering
+            const categoryBtns = document.querySelectorAll('.category-btn');
+            const toolCards = document.querySelectorAll('.tool-card');
+            
+            categoryBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    categoryBtns.forEach(b => b.classList.remove('active'));
+                    
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    const category = this.textContent;
+                    
+                    // Show all tools if "All" is selected
+                    if(category === 'All') {
+                        toolCards.forEach(card => {
+                            card.style.display = 'block';
+                        });
+                        return;
+                    }
+                    
+                    // Filter tools based on category
+                    toolCards.forEach(card => {
+                        const cardCategory = card.querySelector('.category-tag').textContent;
+                        if(cardCategory === category) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+            });
+            
+            // Search functionality
+            const searchInput = document.querySelector('.search-container input');
+            
+            searchInput.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+                
+                toolCards.forEach(card => {
+                    const title = card.querySelector('h3').textContent.toLowerCase();
+                    const description = card.querySelector('.card-body p').textContent.toLowerCase();
+                    
+                    if(title.includes(searchTerm) || description.includes(searchTerm)) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
